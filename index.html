@@ -1,1 +1,936 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LERNet - Building Awareness for Laos Research and Education Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #423D9B;
+            --secondary: #6251B5;
+            --secondary-dark: #2D1B47;
+            --orange: #F28C28;
+            --magenta: #E81C64;
+            --dark-teal: #0E4C68;
+            --body: #F2F2F2;
+            --text: #1D1D1B;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--body);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .project-info {
+            text-align: center;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--secondary-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--orange), var(--magenta), var(--primary));
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--orange);
+            border-radius: 2px;
+        }
+
+        /* Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .overview-card {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overview-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+
+        .overview-card:hover::before {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-description {
+            position: relative;
+            z-index: 2;
+            opacity: 0.9;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--orange);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-item:nth-child(even) {
+            border-left-color: var(--magenta);
+        }
+
+        .feature-item:nth-child(3n) {
+            border-left-color: var(--primary);
+        }
+
+        .feature-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--orange), var(--magenta), var(--primary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 45%;
+            position: relative;
+            border-left: 4px solid var(--orange);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--magenta);
+        }
+
+        .timeline-item:nth-child(3n) .timeline-content {
+            border-left-color: var(--primary);
+        }
+
+        .timeline-date {
+            background: var(--orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            background: var(--magenta);
+        }
+
+        .timeline-item:nth-child(3n) .timeline-date {
+            background: var(--primary);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--orange);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Partners */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .partner-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        .partner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(242, 140, 40, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .partner-card:hover::before {
+            left: 100%;
+        }
+
+        .partner-type {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .government { background: var(--orange); }
+        .university { background: var(--magenta); }
+        .isp { background: var(--dark-teal); }
+        .nren { background: var(--secondary); }
+
+        /* Challenges */
+        .challenges-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .challenge-item {
+            background: linear-gradient(135deg, #fff3f3, #ffe8e8);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--magenta);
+            position: relative;
+        }
+
+        .challenge-title {
+            color: var(--magenta);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Future Directions */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .future-item {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--dark-teal);
+            transition: transform 0.3s ease;
+        }
+
+        .future-item:hover {
+            transform: scale(1.02);
+        }
+
+        .future-title {
+            color: var(--dark-teal);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* SDGs */
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .sdg-item {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .sdg-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--orange);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 2rem 1rem;
+            }
+            
+            .logos {
+                gap: 1.5rem;
+            }
+            
+            .logo {
+                height: 45px;
+            }
+            
+            .nav-container {
+                gap: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-left: 60px;
+            }
+
+            .timeline-marker {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="container">
+            <div class="header-content">
+                <div class="logos">
+                    <img src="images/logos/tein-logo.png" alt="TEIN*CC" class="logo">
+                    <img src="images/logos/asia-connect-logo.png" alt="Asia@Connect" class="logo">
+                    <img src="images/logos/eu-logo.png" alt="European Union" class="logo">
+                </div>
+                <h1>LERNet</h1>
+                <p class="subtitle">Building Awareness for Establishing and Strengthening the Lao Research and Education Network</p>
+                <p class="project-info">6 Targeted Call • WP2 • Laos Initiative</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#overview" class="nav-item active">Overview</a>
+                <a href="#objectives" class="nav-item">Objectives</a>
+                <a href="#activities" class="nav-item">Activities</a>
+                <a href="#outcomes" class="nav-item">Outcomes</a>
+                <a href="#partners" class="nav-item">Partners</a>
+                <a href="#challenges" class="nav-item">Challenges</a>
+                <a href="#future" class="nav-item">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section id="overview" class="section">
+                <h2 class="section-title">Project Overview</h2>
+                <p>LERNet, informally managed by the National University of Laos (NUOL), sought formal recognition as Laos' National Research and Education Network (NREN). Through strategic high-level seminars and comprehensive online outreach activities, this Asia@Connect funded initiative successfully built stakeholder engagement, formed a collaborative working group, and produced a comprehensive master proposal to advance LERNet's official recognition and foster regional collaboration.</p>
+                
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="card-icon">🏛️</div>
+                        <h3 class="card-title">Policy Awareness</h3>
+                        <p class="card-description">Building NREN awareness among national policymakers and government stakeholders</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">🤝</div>
+                        <h3 class="card-title">Stakeholder Engagement</h3>
+                        <p class="card-description">Forming collaborative working groups across ministries, universities, and ISPs</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">Master Proposal</h3>
+                        <p class="card-description">Developing comprehensive framework for LERNet's official establishment</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">🌐</div>
+                        <h3 class="card-title">Digital Presence</h3>
+                        <p class="card-description">Establishing online platforms for sustained visibility and community engagement</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="objectives" class="section">
+                <h2 class="section-title">Project Objectives</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Primary Goal</h3>
+                        <p>Increase awareness of NREN's importance among policymakers, build a working group, and finalize a master proposal for LERNet's official establishment.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Policymaker Awareness</h3>
+                        <p>Build comprehensive understanding among government officials about the strategic importance of National Research and Education Networks.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Working Group Formation</h3>
+                        <p>Create a national working group comprising stakeholders from ministries, universities, and internet service providers.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Master Proposal Development</h3>
+                        <p>Develop a comprehensive master proposal outlining governance, structure, and implementation framework for LERNet.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Digital Outreach Platform</h3>
+                        <p>Launch dedicated website and social media platforms for sustained public outreach and community engagement.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Regional Collaboration</h3>
+                        <p>Foster connections with regional NRENs to share expertise and best practices for network development.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="activities" class="section">
+                <h2 class="section-title">Project Activities Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Dec 2022</div>
+                            <h3 class="feature-title">Inception Meeting & Opening Ceremony</h3>
+                            <p>Half-day meeting with MES policymakers identified key stakeholders and set the agenda for engaging ministries, universities, and ISPs for future collaboration.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Jan-Mar 2023</div>
+                            <h3 class="feature-title">Project Management & Administration</h3>
+                            <p>Dedicated admin team and finance personnel ensured oversight, handling planning, reporting, procurement, and coordination throughout the project period.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Apr 2023</div>
+                            <h3 class="feature-title">Seminar I - Kickoff</h3>
+                            <p>Engaged 44 participants across ministries, ISPs, and universities. Featured speakers from LEARN, BdREN, and DrukREN. Successfully formed a national working group.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">May-Jul 2023</div>
+                            <h3 class="feature-title">Online Platform Development</h3>
+                            <p>Developed lernet.org website and Facebook page to publish news, documents, and events, enhancing visibility and promoting long-term public engagement.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Aug 2023</div>
+                            <h3 class="feature-title">Seminar II - Wrap-up</h3>
+                            <p>Validated and revised the draft master proposal. Featured speakers from ThaiREN, MyREN, and BKNIX shared expertise. Final proposal was accepted and future steps agreed.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="outcomes" class="section">
+                <h2 class="section-title">Key Outcomes</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Working Group Established</h3>
+                        <p>Representatives from MES, MTC, ISPs, and universities successfully collaborated to define LERNet's roadmap and organizational structure.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Master Proposal Completed</h3>
+                        <p>Comprehensive final proposal defining governance, finance, structure, and institutional placement for LERNet's official recognition was successfully developed.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Stakeholder Awareness Raised</h3>
+                        <p>High-level seminars significantly increased understanding of NREN benefits among policymakers, strengthening support across all sectors.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Institutional Commitment Secured</h3>
+                        <p>ITC at NUOL was elevated as the central coordinating body to manage LERNet roles and responsibilities going forward.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Online Presence Established</h3>
+                        <p>Professional website and social media presence enabled consistent visibility and outreach to wider academic and public communities.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Regional Network Integration</h3>
+                        <p>Established connections with regional NRENs fostering knowledge sharing and collaborative development opportunities.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="partners" class="section">
+                <h2 class="section-title">Partner Organizations</h2>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-type university">Lead Institution</div>
+                        <h3>National University of Laos (NUOL)</h3>
+                        <p>Primary coordinating institution managing LERNet operations and strategic development</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type university">Technical Center</div>
+                        <h3>Information Technology Center (ITC), NUOL</h3>
+                        <p>Technical coordination and infrastructure management for network operations</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type nren">National Network</div>
+                        <h3>Lao Education and Research Network (LERNet)</h3>
+                        <p>Core network infrastructure serving educational and research institutions</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type government">Government Ministry</div>
+                        <h3>Ministry of Education and Sports (MES)</h3>
+                        <p>Policy framework and educational sector coordination</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type government">Government Ministry</div>
+                        <h3>Ministry of Technology and Communications (MTC)</h3>
+                        <p>Technology policy and telecommunications regulatory oversight</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type isp">Internet Service Providers</div>
+                        <h3>ETL, Unitel, Best Telecom, LTC Telecom</h3>
+                        <p>Commercial internet infrastructure and connectivity solutions</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type nren">Regional NRENs</div>
+                        <h3>LEARN, BdREN, DrukREN, ThaiREN, MyREN</h3>
+                        <p>Regional expertise sharing and collaborative network development</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="challenges" class="section">
+                <h2 class="section-title">Challenges & Gaps</h2>
+                <div class="challenges-list">
+                    <div class="challenge-item">
+                        <h3 class="challenge-title">Low Initial Awareness</h3>
+                        <p>Policymakers had limited understanding of NREN roles and LERNet's strategic value, requiring extensive foundational discussions and education.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3 class="challenge-title">Lack of Formal Recognition</h3>
+                        <p>LERNet was not a government-approved body, creating complications in stakeholder coordination and advocacy efforts.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3 class="challenge-title">Engagement Coordination Difficulties</h3>
+                        <p>Scheduling and confirming attendance from high-level policymakers presented ongoing logistical challenges throughout the project.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3 class="challenge-title">Limited Financial Buffer</h3>
+                        <p>Project proceeded without pre-financing initially, creating temporary administrative strain and resource management challenges.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="future" class="section">
+                <h2 class="section-title">Future Directions</h2>
+                <div class="future-grid">
+                    <div class="future-item">
+                        <h3 class="future-title">Master Proposal Submission</h3>
+                        <p>Present the finalized comprehensive proposal to MES for formal recognition and official adoption of LERNet as Laos' National Research and Education Network.</p>
+                    </div>
+                    <div class="future-item">
+                        <h3 class="future-title">Expand Digital Outreach</h3>
+                        <p>Continue updating and expanding online platforms to promote services, collaborations, and new events, maintaining community engagement.</p>
+                    </div>
+                    <div class="future-item">
+                        <h3 class="future-title">Sustain Working Group Engagement</h3>
+                        <p>Retain and activate the formed consortium for further development phases, policy advocacy, and implementation of network services.</p>
+                    </div>
+                    <div class="future-item">
+                        <h3 class="future-title">Policy-Level Endorsement</h3>
+                        <p>Initiate high-level dialogue for regulatory support, funding mechanisms, and government-level endorsement of NREN importance.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Relevant SDGs</h2>
+                <div class="sdg-grid">
+                    <div class="sdg-item">SDG 4: Quality Education</div>
+                    <div class="sdg-item">SDG 9: Industry, Innovation and Infrastructure</div>
+                    <div class="sdg-item">SDG 17: Partnerships for the Goals</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Project Information</h3>
+                    <p>LERNet - Lao Research and Education Network</p>
+                    <p>6 Targeted Call • WP2</p>
+                    <p>Building Awareness Initiative</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Key Partners</h3>
+                    <p>National University of Laos (NUOL)</p>
+                    <p>Ministry of Education and Sports</p>
+                    <p>Ministry of Technology and Communications</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Supported By</h3>
+                    <p>Asia@Connect Programme</p>
+                    <p>European Union</p>
+                    <p>TEIN*CC Network</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Online Presence</h3>
+                    <p>Website: lernet.org</p>
+                    <p>Facebook: LERNet Official</p>
+                    <p>Regional NREN Collaboration</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2024 LERNet Project. Building Laos' Digital Research and Education Future.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Update active nav item on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-item, .partner-card, .challenge-item, .future-item, .timeline-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Timeline animations
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>
